@@ -3,8 +3,16 @@
 #include <math.h>
 using namespace std;
 
-// TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-
+/*
+Name: Adam Ventura
+Course: CMPR 154 - Fall 2026
+Date: September 3, 2026
+Assignment: Group Project # 1 - Number System Converter
+Collaboration:
+ Adam Ventura
+ Muhammad Jafri
+ Punam Thapa
+*/
 
 int main() {
 
