@@ -1,4 +1,6 @@
 #include <iostream>
+
+#include "conversions.h"
 using namespace std;
 
 /*
@@ -32,6 +34,8 @@ int main() {
 
     cout << "Enter your input: ";
 
+    int decimalInput;
+    string inputString;
 
     switch (choice) {
         case 1:
