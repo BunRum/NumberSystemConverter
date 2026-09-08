@@ -1,6 +1,4 @@
-#include <cmath>
 #include <iostream>
-#include <math.h>
 using namespace std;
 
 /*
@@ -14,10 +12,10 @@ Collaboration:
  Punam Thapa
 */
 
-int main() {
 
+int main() {
     cout << "====================================" << endl;
-    cout << "      NUMBER SYSTEM CONVERTER" << endl;
+    cout << "      NUMBER SYSTEM CONVERTER       " << endl;
     cout << "====================================" << endl;
 
     cout << "1. Binary to Decimal" << endl;
@@ -32,9 +30,41 @@ int main() {
     cout << "Enter your choice: ";
     cin >> choice;
 
-    int input;
     cout << "Enter your input: ";
-    cin >> input;
+
+
+    switch (choice) {
+        case 1:
+            cin >> decimalInput;
+            cout << BinaryToDecimal(decimalInput) << endl;
+            break;
+        case 2:
+            cin >> decimalInput;
+            cout << DecimalToBinary(decimalInput) << endl;
+            break;
+        case 3:
+            cin >> decimalInput;
+            cout << DecimalToHexadecimal(decimalInput) << endl;
+            break;
+        case 4:
+            cin >> inputString;
+            cout << HexadecimalToDecimal(inputString) << endl;
+            break;
+        case 5:
+            cin >> decimalInput;
+            cout << BinaryToHexadecimal(decimalInput) << endl;
+            break;
+        case 6:
+            cin >> inputString;
+            cout << HexadecimalToBinary(inputString) << endl;
+            break;
+        default:
+            cin >> inputString;
+            cout << inputString << endl;
+            break;
+    }
 
     return 0;
-  }
+}
+
+// test
