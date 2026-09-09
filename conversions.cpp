@@ -8,8 +8,8 @@
 #include <cmath>
 
 // 1
-int BinaryToDecimal(int inputBinary) {
-    int quotient = inputBinary;
+int BinaryToDecimal(const int input) {
+    int quotient = input;
     int inDecimal = 0;
     int step = 0;
 
@@ -22,40 +22,36 @@ int BinaryToDecimal(int inputBinary) {
 
     return inDecimal;
 }
+
 // 2
-int DecimalToBinary(int initialInput) {
-    int input = initialInput;
-    int quotient;
-    int time = 0;
+int DecimalToBinary(const int input) {
+    int quotient = input;
     int inBinary = 0;
+    int step = 0;
 
     do {
-        quotient = input / 2;
-        const int remainder = input % 2;
-        inBinary += remainder * static_cast<int>(pow(10, time));
-        input = quotient;
-        time++;
-    }
-    while (quotient != 0);
+        const int remainder = quotient % 2;
+        quotient /= 2;
+        inBinary += remainder * static_cast<int>(pow(10, step));
+        step++;
+    } while (quotient != 0);
 
     return inBinary;
 }
 
 // 3
-std::string DecimalToHexadecimal(int input) {
+std::string DecimalToHexadecimal(const int input) {
     std::string inHex = std::format("{:X}", input);
     return inHex;
 }
 
 // 4
-std::string HexadecimalToDecimal(const std::string& input) {
-
+std::string HexadecimalToDecimal(const std::string &input) {
     return "";
 }
 
 // 5
 std::string BinaryToHexadecimal(const int input) {
-
     // converts it from Binary to Decimal
     const int toDecimal = BinaryToDecimal(input);
 
@@ -64,8 +60,8 @@ std::string BinaryToHexadecimal(const int input) {
 
     return toHexadecimalString;
 }
-// 6
-std::string HexadecimalToBinary(const std::string& input) {
 
+// 6
+std::string HexadecimalToBinary(const std::string &input) {
     return "";
 }
