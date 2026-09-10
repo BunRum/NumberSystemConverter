@@ -10,8 +10,8 @@
 int BinaryToDecimal(int input);
 int DecimalToBinary(int input);
 std::string DecimalToHexadecimal(int input);
-std::string HexadecimalToDecimal(const std::string& input);
+int HexadecimalToDecimal(const std::string& hex);
 std::string BinaryToHexadecimal(int input);
-std::string HexadecimalToBinary(const std::string& input);
+int HexadecimalToBinary(const std::string& input);
 
 #endif //UNTITLED_CONVERSIONS_H

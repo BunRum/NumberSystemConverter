@@ -19,7 +19,6 @@ int main() {
     cout << "====================================" << endl;
     cout << "      NUMBER SYSTEM CONVERTER       " << endl;
     cout << "====================================" << endl;
-
     cout << "1. Binary to Decimal" << endl;
     cout << "2. Decimal to Binary" << endl;
     cout << "3. Decimal to Hexadecimal" << endl;
