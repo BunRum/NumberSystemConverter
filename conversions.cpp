@@ -41,6 +41,11 @@ int DecimalToBinary(const int input) {
 
 // 3
 std::string DecimalToHexadecimal(const int input) {
+
+    const int inBinary = DecimalToBinary(input);
+
+    
+
     std::string inHex = std::format("{:X}", input);
     return inHex;
 }
