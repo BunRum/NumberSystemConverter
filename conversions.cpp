@@ -78,7 +78,7 @@ int HexadecimalToDecimal(const std::string &hex) {
         {
             decimal += 15 * pow(16, hex.length() - i -1);
         }
-        else if (hex[i] != '0')
+        else 
         {
             decimal += (hex[i] - '0') * pow(16, hex.length() - i - 1);
         }
