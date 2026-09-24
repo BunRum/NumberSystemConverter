@@ -1,103 +1,122 @@
 #include <iostream>
-
-#include "conversions.h"
+#include <string>
+#include <algorithm>
 using namespace std;
 
-/*
-Name: Adam Ventura
-Course: CMPR 154 - Fall 2026
-Date: September 3, 2026
-Assignment: Group Project # 1 - Number System Converter
-Collaboration:
- Adam Ventura
- Muhammad Jafri
- Punam Thapa
-*/
+// function to convert
+// Hexadecimal to Binary Number
+// choice 2
 
-void displayChoices() {
-    cout << "====================================\n"
-        "      NUMBER SYSTEM CONVERTER       \n"
-        "====================================\n";
-    cout << "1. Binary to Decimal" << endl;
-    cout << "2. Decimal to Binary" << endl;
-    cout << "3. Decimal to Hexadecimal" << endl;
-    cout << "4. Hexadecimal to Decimal" << endl;
-    cout << "5. Binary to Hexadecimal" << endl;
-    cout << "6. Hexadecimal to Binary" << endl;
-    cout << "7. Exit" << endl;
-}
+string decToBinary(int n) {
 
-/*
- * This function helps me display the conversion results with decorations
-*/
-void displayConversion(const string &from, const string &input,
-                       const string &to, const string &output) {
-    cout << "\n====================================\n"
-            "          CONVERSION RESULT         \n"
-            "====================================\n"
-            << from << ": " << input << '\n'
-            << to << ": " << output << '\n'
-            << "====================================\n\n";
-
-
-    std::cin.ignore();
-
-    cout << "Press ENTER to continue...";
-    cin.get();
-}
-
-int main() {
-    while (true) {
-        displayChoices();
-
-        int choice;
-        cout << "\nEnter your choice: ";
-        cin >> choice;
-        cin.ignore(std::numeric_limits<int>::max(), '\n');
-
-        if (choice == 7) {
-            cout << "Exiting..." << endl;
-            break;
-        }
-
-        if (choice < 1 || choice > 6) {
-            cout << "Invalid choice." << endl;
-            continue;
-        }
-
-        string input;
-        cout << "Enter your input: ";
-        cin >> input;
-
-        switch (choice) {
-            case 1:
-                displayConversion("Binary", input, "Decimal",
-                                  to_string(BinaryToDecimal(stoi(input))));
-                break;
-            case 2:
-                displayConversion("Decimal", input, "Binary",
-                                  to_string(DecimalToBinary(stoi(input))));
-                break;
-            case 3:
-                displayConversion("Decimal", input, "Hexadecimal",
-                                  DecimalToHexadecimal(stoi(input)));
-                break;
-            case 4:
-                displayConversion("Hexadecimal", input, "Decimal",
-                                  to_string(HexadecimalToDecimal(input)));
-                break;
-            case 5:
-                displayConversion("Binary", input, "Hexadecimal",
-                                  BinaryToHexadecimal(stoi(input)));
-                break;
-            case 6:
-                displayConversion("Hexadecimal", input, "Binary",
-                                  to_string(HexadecimalToBinary(input)));
-                break;
-            default:
-                break;
-        }
+    string bin = "";
+    while (n > 0) {
+        // checking the mod 
+        int bit = n % 2;
+        bin.push_back('0' + bit);
+        n /= 2;
     }
+
+    // reverse the string 
+    reverse(bin.begin(), bin.end());
+    return bin;
+}
+
+
+// funtion to convert decimal to binary
+// choice 6
+void HexToBin(string hexdec)
+{
+    //Skips "0x" if present at beggining of Hex string
+    size_t i = (hexdec[1] == 'x' || hexdec[1] == 'X') ? 2 : 0;
+
+    while (hexdec[i]) {
+
+        switch (hexdec[i]) {
+        case '0':
+            cout << "0000";
+            break;
+        case '1':
+            cout << "0001";
+            break;
+        case '2':
+            cout << "0010";
+            break;
+        case '3':
+            cout << "0011";
+            break;
+        case '4':
+            cout << "0100";
+            break;
+        case '5':
+            cout << "0101";
+            break;
+        case '6':
+            cout << "0110";
+            break;
+        case '7':
+            cout << "0111";
+            break;
+        case '8':
+            cout << "1000";
+            break;
+        case '9':
+            cout << "1001";
+            break;
+        case 'A':
+        case 'a':
+            cout << "1010";
+            break;
+        case 'B':
+        case 'b':
+            cout << "1011";
+            break;
+        case 'C':
+        case 'c':
+            cout << "1100";
+            break;
+        case 'D':
+        case 'd':
+            cout << "1101";
+            break;
+        case 'E':
+        case 'e':
+            cout << "1110";
+            break;
+        case 'F':
+        case 'f':
+            cout << "1111";
+            break;
+        case '.':
+            cout << ".";
+            break;
+        default:
+            cout << "\nInvalid hexadecimal digit "
+                << hexdec[i];
+        }
+        i++;
+    }
+}
+
+// driver code
+int main()
+{
+    // get the decimal number
+    int n;
+    cout << "Enter the decimal number: ";
+    cin >> n;
+    // Convert the decimal number to binary
+    cout << "\nbinary number : ";
+    cout << decToBinary(n) << endl;
+
+ // Get the Hexadecimal number
+    char hexdec[100];
+    cout << "Enter hexdecimal number: ";
+    cin >> hexdec;
+
+    // Convert HexaDecimal to Binary
+    cout << "\nBinary value is : ";
+    HexToBin(hexdec);
 
     return 0;
 }
