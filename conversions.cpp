@@ -49,19 +49,25 @@ std::string DecimalToBinary(const int input) {
 
 // 3
 std::string DecimalToHexadecimal(const int input) {
+    // These characters are used to represent values 0 through 15 in hexadecimal.
     static constexpr char hexDigits[] = "0123456789ABCDEF";
 
     std::string inHex;
+
+    // Divide this value by 16 until there is nothing left to convert.
     int quotient = input;
 
     do {
+        // The remainder is the next hexadecimal digit, from right to left.
         const int remainder = quotient % 16;
         quotient /= 16;
 
+        // Use the remainder as an index to find its hexadecimal character.
         inHex.push_back(hexDigits[remainder]);
 
     } while (quotient != 0);
 
+    // The remainders were collected backwards, so reverse them for the final result.
     std::ranges::reverse(inHex);
 
     return inHex;
@@ -110,32 +116,43 @@ int HexadecimalToDecimal(const std::string &hex) {
 
 // 5
 std::string BinaryToHexadecimal(const std::string &input) {
+    // Each hexadecimal digit represents four binary bits.
     static constexpr char hexDigits[] = "0123456789ABCDEF";
     std::string hexadecimal;
 
+    // Ignore leading zeroes so the result does not start with unnecessary zeroes.
     std::size_t firstBit = 0;
     while (firstBit < input.size() && input[firstBit] == '0') {
         ++firstBit;
     }
 
+    // If every bit was zero, the hexadecimal value is simply zero.
     if (firstBit == input.size()) {
         return "0";
     }
 
+    // The first group may have fewer than four bits; every later group has four.
     const std::size_t bitCount = input.size() - firstBit;
     const std::size_t firstGroupSize = bitCount % 4 == 0 ? 4 : bitCount % 4;
 
-    for (std::size_t groupStart = firstBit, groupSize = firstGroupSize; // group loop
+    // Read one binary group at a time and turn it into one hexadecimal digit.
+    for (std::size_t groupStart = firstBit, groupSize = firstGroupSize;
          groupStart < input.size();
          groupStart += groupSize, groupSize = 4) {
         int value = 0;
-        for (std::size_t bit = 0; bit < groupSize; ++bit) { // bit loop
+        for (std::size_t bit = 0; bit < groupSize; ++bit) {
             const char digit = input[groupStart + bit];
+
+            // Binary input can only contain a 0 or 1.
             if (digit != '0' && digit != '1') {
                 return "Invalid binary digit " + std::string(1, digit);
             }
+
+            // Shift the current value left and add this bit.
             value = value * 2 + (digit - '0');
         }
+
+        // Use the binary group's decimal value as an index into the hex digits.
         hexadecimal.push_back(hexDigits[value]);
     }
 
