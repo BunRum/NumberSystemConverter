@@ -7,11 +7,11 @@
 
 #include <string>
 
-int BinaryToDecimal(int input);
-int DecimalToBinary(int input);
+int BinaryToDecimal(const std::string& input);
+std::string DecimalToBinary(int input);
 std::string DecimalToHexadecimal(int input);
 int HexadecimalToDecimal(const std::string& hex);
-std::string BinaryToHexadecimal(int input);
-int HexadecimalToBinary(const std::string& input);
+std::string BinaryToHexadecimal(const std::string& input);
+std::string HexadecimalToBinary(const std::string& input);
 
 #endif //UNTITLED_CONVERSIONS_H

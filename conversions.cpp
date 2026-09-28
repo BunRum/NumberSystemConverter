@@ -3,14 +3,15 @@
 //
 #include "conversions.h"
 
+#include <algorithm>
 #include <format>
 #include <iostream>
 #include <cmath>
+#include <unordered_map>
+#include <variant>
 
 // 1
-int BinaryToDecimal(const int input) {
-    std::string binary = std::to_string(input);
-
+int BinaryToDecimal(const std::string &binary) {
     int decimal = 0; //decimal values
 
     for (long i = binary.length() - 1; i >= 0; i--) //Starts from the right (last bit) then goes left (first bit).  binary.length() - 1 initalizes to last bit and moves left
@@ -26,24 +27,43 @@ int BinaryToDecimal(const int input) {
 }
 
 // 2
-int DecimalToBinary(const int input) {
-    int quotient = input;
-    int inBinary = 0;
-    int step = 0;
+std::string DecimalToBinary(const int input) {
+    int n = input;
+    if (n == 0) {
+        return "0";
+    }
 
-    do {
-        const int remainder = quotient % 2;
-        quotient /= 2;
-        inBinary += remainder * static_cast<int>(pow(10, step));
-        step++;
-    } while (quotient != 0);
+    std::string bin = "";
+    while (n > 0) {
+        // checking the mod
+        const int bit = n % 2;
+        bin.push_back('0' + bit);
+        n /= 2;
+    }
 
-    return inBinary;
+    // reverse the string
+    std::reverse(bin.begin(), bin.end());
+    return bin;
 }
+
 
 // 3
 std::string DecimalToHexadecimal(const int input) {
-    std::string inHex = std::format("{:X}", input);
+    static constexpr char hexDigits[] = "0123456789ABCDEF";
+
+    std::string inHex;
+    int quotient = input;
+
+    do {
+        const int remainder = quotient % 16;
+        quotient /= 16;
+
+        inHex.push_back(hexDigits[remainder]);
+
+    } while (quotient != 0);
+
+    std::ranges::reverse(inHex);
+
     return inHex;
 }
 
@@ -89,19 +109,77 @@ int HexadecimalToDecimal(const std::string &hex) {
 }
 
 // 5
-std::string BinaryToHexadecimal(const int input) {
-    // converts it from Binary to Decimal
-    const int toDecimal = BinaryToDecimal(input);
+std::string BinaryToHexadecimal(const std::string &input) {
+    static constexpr char hexDigits[] = "0123456789ABCDEF";
+    std::string hexadecimal;
 
-    // convert from decimal to hexadecimal
-    std::string toHexadecimalString = DecimalToHexadecimal(toDecimal);
+    std::size_t firstBit = 0;
+    while (firstBit < input.size() && input[firstBit] == '0') {
+        ++firstBit;
+    }
 
-    return toHexadecimalString;
+    if (firstBit == input.size()) {
+        return "0";
+    }
+
+    const std::size_t bitCount = input.size() - firstBit;
+    const std::size_t firstGroupSize = bitCount % 4 == 0 ? 4 : bitCount % 4;
+
+    for (std::size_t groupStart = firstBit, groupSize = firstGroupSize; // group loop
+         groupStart < input.size();
+         groupStart += groupSize, groupSize = 4) {
+        int value = 0;
+        for (std::size_t bit = 0; bit < groupSize; ++bit) { // bit loop
+            const char digit = input[groupStart + bit];
+            if (digit != '0' && digit != '1') {
+                return "Invalid binary digit " + std::string(1, digit);
+            }
+            value = value * 2 + (digit - '0');
+        }
+        hexadecimal.push_back(hexDigits[value]);
+    }
+
+    return hexadecimal;
 }
 
 // 6
-int HexadecimalToBinary(const std::string &input) {
-    const int toDecimal = HexadecimalToDecimal(input);
-    const int toBinary = DecimalToBinary(toDecimal);
-    return toBinary;
+std::string HexadecimalToBinary(const std::string &input) {
+    std::string binary;
+
+    // Skip a leading "0x" or "0X", if present.
+    const std::size_t start = input.size() >= 2 && input[0] == '0' &&
+                                      (input[1] == 'x' || input[1] == 'X')
+                                  ? 2
+                                  : 0;
+
+    for (std::size_t i = start; i < input.size(); ++i) {
+        switch (input[i]) {
+            case '0': binary += "0000"; break;
+            case '1': binary += "0001"; break;
+            case '2': binary += "0010"; break;
+            case '3': binary += "0011"; break;
+            case '4': binary += "0100"; break;
+            case '5': binary += "0101"; break;
+            case '6': binary += "0110"; break;
+            case '7': binary += "0111"; break;
+            case '8': binary += "1000"; break;
+            case '9': binary += "1001"; break;
+            case 'A':
+            case 'a': binary += "1010"; break;
+            case 'B':
+            case 'b': binary += "1011"; break;
+            case 'C':
+            case 'c': binary += "1100"; break;
+            case 'D':
+            case 'd': binary += "1101"; break;
+            case 'E':
+            case 'e': binary += "1110"; break;
+            case 'F':
+            case 'f': binary += "1111"; break;
+            case '.': binary += '.'; break;
+            default: return "Invalid hexadecimal digit " + std::string(1, input[i]);
+        }
+    }
+
+    return binary;
 }
