@@ -5,12 +5,12 @@
 using namespace std;
 
 /*
-Name: Adam Ventura
+Name: Adam Ventura / Melody Ventura
 Course: CMPR 154 - Fall 2026
 Date: September 3, 2026
 Assignment: Group Project # 1 - Number System Converter
 Collaboration:
- Adam Ventura
+ Team Lead: Adam Ventura / Melody Ventura
  Muhammad Jafri
  Punam Thapa
 */
